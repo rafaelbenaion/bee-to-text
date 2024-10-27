@@ -4,7 +4,7 @@
 
 ## Play
 
-You can **play:** the game here : [https://rafaelbenaion.github.io/bee-to-text/](https://rafaelbenaion.github.io/bee-to-text/)
+You can **play** the game here : [https://rafaelbenaion.github.io/bee-to-text/](https://rafaelbenaion.github.io/bee-to-text/)
  
 ## Overview
 
