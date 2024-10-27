@@ -2,6 +2,10 @@
 
 ![Bee To Text Screenshot](assets/screenshot.png)
 
+## Play
+
+You can **play:** the game here : [https://linkedin.com/in/rafbaptista/](https://linkedin.com/in/rafbaptista/)
+ 
 ## Overview
 
 **Bee To Text** is an interactive project developed as part of the **Steering Behaviors** course for the second year of the Master's program **MIAGE IA2** at **Université Côte d'Azur**. Authored by **Rafael Baptista**, this game showcases advanced steering behaviors applied to autonomous agents (bees) within a dynamic environment.
