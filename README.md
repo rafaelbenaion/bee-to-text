@@ -1,10 +1,10 @@
-# Bee Chase Game
+# Bee To Text
 
-![Bee Chase Game Screenshot](assets/screenshot.png)
+![Bee To Text Screenshot](assets/screenshot.png)
 
 ## Overview
 
-**Bee Chase Game** is an interactive project developed as part of the **Steering Behaviors** course for the second year of the Master's program **MIAGE IA2** at **Université Côte d'Azur**. Authored by **Rafael Baptista**, this game showcases advanced steering behaviors applied to autonomous agents (bees) within a dynamic environment.
+**Bee To Text** is an interactive project developed as part of the **Steering Behaviors** course for the second year of the Master's program **MIAGE IA2** at **Université Côte d'Azur**. Authored by **Rafael Baptista**, this game showcases advanced steering behaviors applied to autonomous agents (bees) within a dynamic environment.
 
 ## Table of Contents
 
@@ -24,7 +24,7 @@
 
 ### Starting the Game
 
-Upon launching the Bee Chase Game, you are greeted with a **Start** button centered on the screen. Clicking this button initializes the game by displaying the input box and the "+" button, allowing you to interact with the bee population.
+Upon launching the Bee To Text, you are greeted with a **Start** button centered on the screen. Clicking this button initializes the game by displaying the input box and the "+" button, allowing you to interact with the bee population.
 
 ### Objective
 
@@ -52,7 +52,7 @@ Bee points are a crucial resource in the game, determining how many times you ca
 
 ## Victory Condition
 
-You achieve victory in the Bee Chase Game under the following conditions:
+You achieve victory in the Bee To Text under the following conditions:
 
 1. **Non-Empty Input**: Ensure that you have written a word in the input box.
 2. **Sufficient Bees**: The number of bees in your swarm must be enough to compose the full input text.
