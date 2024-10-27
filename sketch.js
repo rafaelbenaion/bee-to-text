@@ -20,6 +20,10 @@ let countDisplay;            // HTML element to display the remaining presses
 let outOfBeePointsPopup;
 let hintPopup; // Existing Hint Popup
 let goalPopup; // **New Goal Popup**
+let playAgainButton; // **New "Play Again" Button**
+
+let hasWon = false;    // Flag to track if victory condition has been met
+let isStarted = false; // Flag to track if the game has started
 
 // Timer for changing a random bee to blue
 let blueBeeTimer;
@@ -90,14 +94,10 @@ function setup() {
   startButton.style('border-radius', '10px');
   startButton.mousePressed(startApp); // Call startApp when pressed
   startButton.mouseOver(() => {
-
       startButton.style('background-color', '#ff0000'); // Red on hover
-    
   });
   startButton.mouseOut(() => {
-
       startButton.style('background-color', '#444'); // Reset when not hovering
-  
   });
 
   // Add a text box to change the letter
@@ -198,7 +198,7 @@ function setup() {
   hintPopup.style('border', '2px solid #ffcc00'); // Yellow border for distinction
   hintPopup.style('border-radius', '10px');
   hintPopup.style('display', 'block'); // Visible initially
-  //make a lit bit transparent
+  // Make a bit transparent
   hintPopup.style('opacity', '0.7');
 
   // **New "Goal" Popup**
@@ -209,16 +209,37 @@ function setup() {
   goalPopup.style('transform', 'translateX(-50%)');
   goalPopup.style('padding', '10px 20px');
   goalPopup.style('background-color', '#00f'); // Dark background
-  goalPopup.style('color', '#fff'); // Yellow text
-  //make a lit bit transparent
+  goalPopup.style('color', '#fff'); // Blue text
+  // Make a bit transparent
   goalPopup.style('opacity', '0.7');
   goalPopup.style('font-size', '16px'); // Text size
   goalPopup.style('border', '2px solid #00f'); // Blue border
   goalPopup.style('border-radius', '10px');
   goalPopup.style('display', 'block'); // Visible initially
 
+  // **Create the "Play Again" Button**
+  playAgainButton = createButton('Play again');
+  playAgainButton.position(windowWidth / 2 - 75, windowHeight / 2 + 35); // Centered below the original "Start" button position
+  playAgainButton.style('width', '150px');
+  playAgainButton.style('height', '50px');
+  playAgainButton.style('font-size', '20px');
+  playAgainButton.style('background-color', '#444');
+  playAgainButton.style('color', '#fff');
+  playAgainButton.style('border', 'none');
+  playAgainButton.style('border-radius', '10px');
+  playAgainButton.mousePressed(() => {
+    window.location.reload(); // Refresh the page
+  });
+  playAgainButton.mouseOver(() => {
+      playAgainButton.style('background-color', '#00f'); // Blue on hover
+  });
+  playAgainButton.mouseOut(() => {
+      playAgainButton.style('background-color', '#444'); // Reset when not hovering
+  });
+  playAgainButton.hide(); // Hide initially
+
   // Initialize the blue bee timer
-  blueBeeTimer = setInterval(changeRandomBeeToBlue, 5000); // Every 5000 milliseconds (5 seconds)
+  blueBeeTimer = setInterval(changeRandomBeeToBlue, 1000); // Every 5000 milliseconds (5 seconds)
 }
 
 function startApp() {
@@ -233,6 +254,9 @@ function startApp() {
 
   // Hide the "Goal" popup if desired (optional)
   // goalPopup.style('display', 'none');
+
+  // Set the game as started
+  isStarted = true;
 }
 
 function draw() {
@@ -306,6 +330,23 @@ function draw() {
 
   // **Handle Vehicle Removal After Explosion**
   vehicles = vehicles.filter(vehicle => !vehicle.isRemoved);
+
+  // **Check Victory Condition if the game has started and not yet won**
+  if (isStarted && !hasWon) {
+    // Check if the input box has some text
+    let hasInput = letter.trim() !== "";
+    // Check if the number of bees is equal to or greater than the number of targets
+    let vehiclesEnough = vehicles.length >= targets.length;
+    // Check if none of the bees are blue
+    let allNotBlue = vehicles.every(v => !v.isBlue);
+    
+    // Debugging Statements
+    console.log(`Victory Check -> hasInput: ${hasInput}, vehiclesEnough: ${vehiclesEnough}, allNotBlue: ${allNotBlue}`);
+    
+    if (hasInput && vehiclesEnough && allNotBlue) {
+      triggerVictory();
+    }
+  }
 
   // **Check if More Targets Than Vehicles and Display Popup**
   if (targets.length > vehicles.length) {
@@ -422,7 +463,8 @@ function windowResized() {
   countDisplay.position(windowWidth * 0.85, windowHeight - 80 - 50); // Reposition the count display above the button
   outOfBeePointsPopup.position(width / 2 - outOfBeePointsPopup.size().width / 2, height - 100); // Reposition the popup above the input box
   hintPopup.position(width / 2 - hintPopup.size().width / 2, height - 110); // Reposition the hint popup above the "Out of Bee Points" popup
-  goalPopup.position(width / 2 - goalPopup.size().width / 2, height - 130); // Reposition the goal popup above the "Hint" popup
+  goalPopup.position(width / 2 - goalPopup.size().width / 2, height - 160); // Reposition the goal popup above the "Hint" popup
+  playAgainButton.position(windowWidth / 2 - 75, windowHeight / 2 + 35); // Reposition the "Play again" button
 }
 
 // **New Function to Display Popup Message**
@@ -462,4 +504,34 @@ function changeRandomBeeToBlue() {
       console.log(`Bee at index ${randomIndex} has turned blue.`);
     }
   }
+}
+
+// **New Function to Trigger Victory**
+function triggerVictory() {
+  hasWon = true;
+
+  console.log("Victory condition met! Triggering victory sequence.");
+
+  // Add 500 blue bees
+  for (let i = 0; i < 500; i++) {
+    let newBee = new Vehicle(random(width), random(height));
+    newBee.isBlue = true;
+    newBee.setBlueImage(beeBlueImage);
+    vehicles.push(newBee);
+  }
+
+  // Change input text to "VICTORY!"
+  inputBox.value("VICTORY!");
+
+  // Hide all UI elements
+  inputBox.hide();
+  addButton.hide();
+  startButton.hide();
+  countDisplay.hide();
+  outOfBeePointsPopup.hide();
+  hintPopup.hide();
+  goalPopup.hide();
+
+  // Show the "Play again" button
+  playAgainButton.show();
 }
