@@ -6,8 +6,6 @@
 
 **Bee Chase Game** is an interactive project developed as part of the **Steering Behaviors** course for the second year of the Master's program **MIAGE IA2** at **Université Côte d'Azur**. Authored by **Rafael Baptista**, this game showcases advanced steering behaviors applied to autonomous agents (bees) within a dynamic environment.
 
-The game was developed using **p5.js**, a powerful JavaScript library designed for creative coding. p5.js simplifies the process of creating graphical and interactive experiences, allowing for smooth animations and responsive user interactions essential for the game's mechanics.
-
 ## Table of Contents
 
 - [Gameplay](#gameplay)
@@ -19,8 +17,6 @@ The game was developed using **p5.js**, a powerful JavaScript library designed f
 - [Bee Points](#bee-points)
 - [Victory Condition](#victory-condition)
 - [Project Details](#project-details)
-- [Technologies Used](#technologies-used)
-  - [p5.js](#p5js)
 - [Author](#author)
 - [License](#license)
 
@@ -62,32 +58,12 @@ You achieve victory in the Bee Chase Game under the following conditions:
 2. **Sufficient Bees**: The number of bees in your swarm must be enough to compose the full input text.
 3. **No Blue Bees**: All existing bees in the swarm must **not** be blue. Blue bees indicate a breach in your swarm control.
 
-Upon meeting these conditions:
-
-- **Victory Sequence**: The game adds 500 blue bees to your swarm, updates the input box to display "VICTORY!", and hides all UI elements.
-- **Play Again**: A "Play Again" button appears, allowing you to restart the game and attempt a new victory.
-
 ## Project Details
 
 - **Course**: Steering Behaviors
 - **Program**: Master's in MIAGE IA2
 - **Institution**: Université Côte d'Azur
 - **Author**: Rafael Baptista
-
-## Technologies Used
-
-### p5.js
-
-**p5.js** is a JavaScript library that makes coding accessible for artists, designers, educators, and beginners. It provides a friendly API for drawing graphics and handling user interactions, which is essential for creating interactive games like Bee Chase.
-
-In **Bee Chase Game**, p5.js is utilized for:
-
-- **Rendering Graphics**: Drawing bees, targets, explosions, and UI elements smoothly and efficiently.
-- **Handling Animations**: Managing the movement and behaviors of bees using steering algorithms.
-- **User Interaction**: Capturing mouse events for actions like killing bees and adding more bees.
-- **Responsive Design**: Ensuring that the game adapts to different screen sizes and window resizes seamlessly.
-
-p5.js's capabilities enable the seamless integration of complex behaviors and interactive elements, providing a rich gaming experience.
 
 ## Author
 
