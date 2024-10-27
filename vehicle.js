@@ -16,11 +16,17 @@ class Vehicle {
     this.explosionSize = this.r * 2; // Initial size for explosion animation
     this.explosionGrowthRate = 3; // Speed of growth during explosion
     this.isRemoved = false; // Flag to indicate if the vehicle has been removed
+    this.isBlue = false; // New property to track if the bee is blue
+    this.blueImage = null; // To store the blue bee image
     this.randomMovement();
   }
 
   setTarget(target) {
     this.target = target; // Method to set the target
+  }
+
+  setBlueImage(image) {
+    this.blueImage = image; // Method to set the blue bee image
   }
 
   evade(vehicle) {
@@ -129,6 +135,12 @@ class Vehicle {
           // Fallback to programmatically drawn bee if red image not loaded
           this.drawBee(true);
         }
+      } else if (this.isBlue && this.blueImage) { // Check if the bee is blue
+        // Use blue bee image
+        let angle = this.vel.heading() + PI / 2;
+        rotate(angle);
+        imageMode(CENTER);
+        image(this.blueImage, 0, 0, this.r * 2, this.r * 2); // Draw blue bee image
       } else {
         // Use default bee image
         if (beeImage) {

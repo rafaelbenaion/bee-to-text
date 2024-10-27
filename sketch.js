@@ -7,8 +7,9 @@ let font;
 let inputBox;
 let addButton;
 let startButton;
-let beeImage;      // Variable to hold the default bee image
-let beeRedImage;   // Variable to hold the red bee image
+let beeImage;       // Variable to hold the default bee image
+let beeRedImage;    // Variable to hold the red bee image
+let beeBlueImage;   // Variable to hold the blue bee image
 
 // Variables for the "+" button press limit
 let addButtonMaxPresses = 0; // Will be set based on number of targets
@@ -17,7 +18,11 @@ let countDisplay;            // HTML element to display the remaining presses
 
 // Popup elements
 let outOfBeePointsPopup;
-let hintPopup; // New Hint Popup
+let hintPopup; // Existing Hint Popup
+let goalPopup; // **New Goal Popup**
+
+// Timer for changing a random bee to blue
+let blueBeeTimer;
 
 function preload() {
   // Load a local font
@@ -28,6 +33,9 @@ function preload() {
   
   // Load red bee image
   beeRedImage = loadImage('assets/bee_red.png', beeRedImageLoaded, beeRedImageFailed);
+  
+  // Load blue bee image
+  beeBlueImage = loadImage('assets/bee_blue.png', beeBlueImageLoaded, beeBlueImageFailed);
 }
 
 function beeImageLoaded() {
@@ -44,6 +52,14 @@ function beeRedImageLoaded() {
 
 function beeRedImageFailed() {
   console.error("Error loading red bee image. Make sure the image file is available in the assets folder.");
+}
+
+function beeBlueImageLoaded() {
+  console.log("Blue bee image loaded successfully.");
+}
+
+function beeBlueImageFailed() {
+  console.error("Error loading blue bee image. Make sure the image file is available in the assets folder.");
 }
 
 function fontLoaded() {
@@ -176,12 +192,33 @@ function setup() {
   hintPopup.style('transform', 'translateX(-50%)');
   hintPopup.style('padding', '10px 20px');
   hintPopup.style('background-color', '#333'); // Dark background
-  //yellow text
+  // Yellow text
   hintPopup.style('color', '#ffcc00');
   hintPopup.style('font-size', '16px'); // Text size
   hintPopup.style('border', '2px solid #ffcc00'); // Yellow border for distinction
   hintPopup.style('border-radius', '10px');
   hintPopup.style('display', 'block'); // Visible initially
+  //make a lit bit transparent
+  hintPopup.style('opacity', '0.7');
+
+  // **New "Goal" Popup**
+  goalPopup = createDiv("Goal : To win you have to write a word without any blue bees inside.");
+  goalPopup.style('position', 'absolute');
+  goalPopup.style('bottom', '160px'); // Positioned above the "Hint" popup
+  goalPopup.style('left', '50%');
+  goalPopup.style('transform', 'translateX(-50%)');
+  goalPopup.style('padding', '10px 20px');
+  goalPopup.style('background-color', '#00f'); // Dark background
+  goalPopup.style('color', '#fff'); // Yellow text
+  //make a lit bit transparent
+  goalPopup.style('opacity', '0.7');
+  goalPopup.style('font-size', '16px'); // Text size
+  goalPopup.style('border', '2px solid #00f'); // Blue border
+  goalPopup.style('border-radius', '10px');
+  goalPopup.style('display', 'block'); // Visible initially
+
+  // Initialize the blue bee timer
+  blueBeeTimer = setInterval(changeRandomBeeToBlue, 5000); // Every 5000 milliseconds (5 seconds)
 }
 
 function startApp() {
@@ -193,6 +230,9 @@ function startApp() {
 
   // Hide the "Hint" popup
   hintPopup.style('display', 'none');
+
+  // Hide the "Goal" popup if desired (optional)
+  // goalPopup.style('display', 'none');
 }
 
 function draw() {
@@ -382,6 +422,7 @@ function windowResized() {
   countDisplay.position(windowWidth * 0.85, windowHeight - 80 - 50); // Reposition the count display above the button
   outOfBeePointsPopup.position(width / 2 - outOfBeePointsPopup.size().width / 2, height - 100); // Reposition the popup above the input box
   hintPopup.position(width / 2 - hintPopup.size().width / 2, height - 110); // Reposition the hint popup above the "Out of Bee Points" popup
+  goalPopup.position(width / 2 - goalPopup.size().width / 2, height - 130); // Reposition the goal popup above the "Hint" popup
 }
 
 // **New Function to Display Popup Message**
@@ -407,4 +448,18 @@ function displayPopup(message) {
   textAlign(CENTER, CENTER);
   textSize(18);
   text(message, width / 2, y + popupHeight / 2);
+}
+
+// **New Function to Change a Random Bee to Blue**
+function changeRandomBeeToBlue() {
+  if (vehicles.length > 0) {
+    let randomIndex = floor(random(vehicles.length));
+    let selectedVehicle = vehicles[randomIndex];
+    // Avoid selecting a bee that's already blue
+    if (!selectedVehicle.isBlue) {
+      selectedVehicle.isBlue = true;
+      selectedVehicle.setBlueImage(beeBlueImage); // Set the blue image
+      console.log(`Bee at index ${randomIndex} has turned blue.`);
+    }
+  }
 }
